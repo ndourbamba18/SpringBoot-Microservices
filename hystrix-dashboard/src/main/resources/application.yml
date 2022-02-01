@@ -1,0 +1,17 @@
+
+
+server:
+  port: 9090
+
+spring:
+  application:
+    name: HYSTRIX-DASHBOARD
+
+
+  cloud:
+    config:
+      enabled: false
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "*"
