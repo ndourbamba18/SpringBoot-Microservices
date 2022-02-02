@@ -22,6 +22,10 @@ public class DepartmentResource {
         this.departmentService = departmentService;
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/department-service/api/v1/departments/add
+     *   URL ===>  http://localhost:8200/api/v1/departments/add
+     */
     @PostMapping(path = "/add")
     public ResponseEntity<?> addNewDepartment(@Valid @RequestBody DepartmentRequest request){
         if (departmentService.existsDepartmentName(request.getDepartmentName()))
@@ -29,6 +33,10 @@ public class DepartmentResource {
         return new ResponseEntity<>(departmentService.addDepartment(request), HttpStatus.CREATED);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/department-service/api/v1/departments/{id}
+     *   URL ===>  http://localhost:8200/api/v1/departments/{id}
+     */
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateDepartmentById(@PathVariable Long id, @Valid @RequestBody DepartmentRequest request){
         if (departmentService.existsDepartmentName(request.getDepartmentName()) && departmentService.findDepartmentName(request.getDepartmentName()).getDepartmentId() != id)
@@ -36,6 +44,10 @@ public class DepartmentResource {
         return new ResponseEntity<>(departmentService.editDepartment(id, request), HttpStatus.CREATED);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/department-service/api/v1/departments/all
+     *   URL ===>  http://localhost:8200/api/v1/departments/all
+     */
     @GetMapping(path = "/all")
     public ResponseEntity<?> fetchAllDepartments(){
         List<Department> departments = departmentService.findAllDepartments();
@@ -44,11 +56,19 @@ public class DepartmentResource {
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/department-service/api/v1/departments/{id}
+     *   URL ===>  http://localhost:8200/api/v1/departments/{id}
+     */
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> fetchEmployeeById(@PathVariable Long id){
         return new ResponseEntity<>(departmentService.findDepartment(id), HttpStatus.OK);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/department-service/api/v1/departments/{id}
+     *   URL ===>  http://localhost:8200/api/v1/departments/{id}
+     */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id){
         departmentService.deleteDepartment(id);

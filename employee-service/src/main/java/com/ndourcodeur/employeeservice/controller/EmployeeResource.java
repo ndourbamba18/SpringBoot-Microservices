@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.Path;
 import java.util.List;
 
 @RestController
@@ -23,6 +22,10 @@ public class EmployeeResource {
         this.employeeService = employeeService;
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/employee-service/api/v1/employees/add
+     *   URL ===>  http://localhost:8100/api/v1/employees/add
+     */
     @PostMapping(path = "/add")
     public ResponseEntity<?> addNewEmployee(@Valid @RequestBody EmployeeRequest request){
         if (employeeService.existsEmail(request.getEmail()))
@@ -30,6 +33,10 @@ public class EmployeeResource {
         return new ResponseEntity<>(employeeService.addEmployee(request), HttpStatus.CREATED);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/employee-service/api/v1/employees/{id}
+     *   URL ===>  http://localhost:8100/api/v1/employees/{id}
+     */
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateEmployeeById(@PathVariable Long id, @Valid @RequestBody EmployeeRequest request){
         if (employeeService.existsEmail(request.getEmail()) && employeeService.findEmail(request.getEmail()).getId() != id)
@@ -37,6 +44,10 @@ public class EmployeeResource {
         return new ResponseEntity<>(employeeService.editEmployee(id, request), HttpStatus.CREATED);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/employee-service/api/v1/employees/all
+     *   URL ===>  http://localhost:8100/api/v1/employees/all
+     */
     @GetMapping(path = "/all")
     public ResponseEntity<?> fetchAllEmployees(){
         List<Employee> employees = employeeService.findAllEmployees();
@@ -52,11 +63,19 @@ public class EmployeeResource {
     }
      */
 
+    /**
+     *   URL ===>  http://localhost:8765/employee-service/api/v1/employees/{id}
+     *   URL ===>  http://localhost:8100/api/v1/employees/{id}
+     */
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> fetchEmployeeWithDepartmentById(@PathVariable Long id){
         return new ResponseEntity<>(employeeService.findEmployeeWithDepartment(id), HttpStatus.OK);
     }
 
+    /**
+     *   URL ===>  http://localhost:8765/employee-service/api/v1/employees/{id}
+     *   URL ===>  http://localhost:8100/api/v1/employees/{id}
+     */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Long id){
         employeeService.deleteEmployee(id);
